@@ -24,9 +24,9 @@ import glob
 import os
 import subprocess
 
-import torch
+# import torch
 from setuptools import find_packages, setup
-from torch.utils.cpp_extension import CUDA_HOME, CppExtension, CUDAExtension
+# from torch.utils.cpp_extension import CUDA_HOME, CppExtension, CUDAExtension
 
 # groundingdino version info
 version = "0.1.0"
@@ -50,7 +50,7 @@ def write_version_file():
 
 requirements = ["torch", "torchvision"]
 
-torch_ver = [int(x) for x in torch.__version__.split(".")[:2]]
+# torch_ver = [int(x) for x in torch.__version__.split(".")[:2]]
 
 
 def get_extensions():
@@ -70,7 +70,7 @@ def get_extensions():
     extra_compile_args = {"cxx": []}
     define_macros = []
 
-    if False and torch.cuda.is_available() and CUDA_HOME is not None:
+    if False and CUDA_HOME is not None:
         print("Compiling with CUDA")
         extension = CUDAExtension
         sources += source_cuda
@@ -196,7 +196,7 @@ if __name__ == "__main__":
         url="https://github.com/IDEA-Research/GroundingDINO",
         description="open-set object detector",
         license=license,
-        install_requires=['torch>=1.8.1', *parse_requirements("requirements.txt")],
+        install_requires=parse_requirements("requirements.txt"),
         packages=find_packages(
             exclude=(
                 "configs",
@@ -204,5 +204,5 @@ if __name__ == "__main__":
             )
         ),
         ext_modules=get_extensions(),
-        cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
+        # cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
     )
