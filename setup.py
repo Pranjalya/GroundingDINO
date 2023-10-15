@@ -24,9 +24,9 @@ import glob
 import os
 import subprocess
 
-# import torch
+import torch
 from setuptools import find_packages, setup
-# from torch.utils.cpp_extension import CUDA_HOME, CppExtension, CUDAExtension
+from torch.utils.cpp_extension import CUDA_HOME, CppExtension, CUDAExtension
 
 # groundingdino version info
 version = "0.1.0"
@@ -50,7 +50,7 @@ def write_version_file():
 
 requirements = ["torch", "torchvision"]
 
-# torch_ver = [int(x) for x in torch.__version__.split(".")[:2]]
+torch_ver = [int(x) for x in torch.__version__.split(".")[:2]]
 
 
 def get_extensions():
