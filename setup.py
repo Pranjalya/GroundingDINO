@@ -196,7 +196,7 @@ if __name__ == "__main__":
         url="https://github.com/IDEA-Research/GroundingDINO",
         description="open-set object detector",
         license=license,
-        install_requires=parse_requirements("requirements.txt"),
+        install_requires=['torch>=1.8.1', *parse_requirements("requirements.txt")],
         packages=find_packages(
             exclude=(
                 "configs",
