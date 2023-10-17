@@ -24,9 +24,9 @@ import glob
 import os
 import subprocess
 
-import torch
+# import torch
 from setuptools import find_packages, setup
-from torch.utils.cpp_extension import CUDA_HOME, CppExtension, CUDAExtension
+# from torch.utils.cpp_extension import CUDA_HOME, CppExtension, CUDAExtension
 
 # groundingdino version info
 version = "0.1.0"
@@ -42,12 +42,12 @@ except Exception:
 
 
 def write_version_file():
-    version_path = os.path.join(cwd, "groundingdino", "version.py")
+    version_path = os.path.join(cwd, "groundingdino", "__init__.py")
     with open(version_path, "w") as f:
         f.write(f"__version__ = '{version}'\n")
         # f.write(f"git_version = {repr(sha)}\n")
 
-
+'''
 requirements = ["torch", "torchvision"]
 
 torch_ver = [int(x) for x in torch.__version__.split(".")[:2]]
@@ -70,8 +70,7 @@ def get_extensions():
     extra_compile_args = {"cxx": []}
     define_macros = []
 
-    
-    if False and torch.cuda.is_available() and CUDA_HOME is not None:
+    if CUDA_HOME is not None and (torch.cuda.is_available() or "TORCH_CUDA_ARCH_LIST" in os.environ):
         print("Compiling with CUDA")
         extension = CUDAExtension
         sources += source_cuda
@@ -102,6 +101,7 @@ def get_extensions():
     ]
 
     return ext_modules
+'''
 
 
 def parse_requirements(fname="requirements.txt", with_version=True):
@@ -179,6 +179,7 @@ def parse_requirements(fname="requirements.txt", with_version=True):
                 yield item
 
     packages = list(gen_packages_items())
+    print(f'packages needed are {packages}')
     return packages
 
 
@@ -194,7 +195,7 @@ if __name__ == "__main__":
         name="groundingdino",
         version="0.1.0",
         author="International Digital Economy Academy, Shilong Liu",
-        url="https://github.com/IDEA-Research/GroundingDINO",
+        url="https://github.com/Pranjalya/GroundingDINO",
         description="open-set object detector",
         license=license,
         install_requires=parse_requirements("requirements.txt"),
@@ -204,6 +205,6 @@ if __name__ == "__main__":
                 "tests",
             )
         ),
-        ext_modules=get_extensions(),
+        # ext_modules=get_extensions(),
         # cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
     )
